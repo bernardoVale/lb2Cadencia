@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+      <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Cadências</title>
+</head>
+<body>
+    <form action="http://127.0.0.1:8000/cadencia/" class="form-inline" role="form" method="POST">
+        {% csrf_token %}
+        <div class="jumbotron">
+            <h1>Meus Projetos</h1>
+            <p>Encontre seu projeto utilizando os campos de pesquisa!</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Encontrar Projeto</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group {%if form.vendedor.errors %}has-error has-feedback{%endif%}">
+                        <label for="vendedor" class="sr-only"> Vendedor</label>
+                        <input type="text" class="form-control" name="vendedor"
+                               placeholder="Vendedor do projeto..."/>
+                        {%if form.vendedor.errors %}
+                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        {%endif%}
+                    </div>
+                    <div class="form-group">
+                        <label for="cliente" class="sr-only"> Cliente</label>
+                        <input type="text" name="cliente"
+                               class="form-control" placeholder="Nome da empresa..."/>
+                    </div>
+                    <div class="form-group">
+                        <label for="nome" class="sr-only"> Projeto</label>
+                        <input type="text" name="nome"
+                               class="form-control" placeholder="Nome do projeto..."/>
+                    </div>
+                    <button type="submit" name="Salvar"
+                            class="btn btn-lg btn-primary"> Pesquisar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% if proj.count > 0 %}
+    <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Projetos Encontrados</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Vendedor</th>
+                                <th>Cliente</th>
+                                <th>Projeto</th>
+                                <th>Contato</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in proj %}
+                            <tr>
+                                <td>{{ p.vendedor }}</td>
+                                <td>{{ p.cliente }}</td>
+                                <td>{{ p.nome }}</td>
+                                <td>{{ p.contato }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+    {% endif %}
+    <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+</body>
+</html>

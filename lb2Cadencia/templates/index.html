@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+      <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+      <link rel="stylesheet" href="{% static "dest/js/standalone/stylesheet.css" %}">
+      <link href="{% static "dest/css/selectize.default.css" %}" rel="stylesheet" >
+      <title>LB2 Cadencia</title>
+  </head>
+
+
+    <!-- Bootstrap -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+      <form action="http://127.0.0.1:8000/" class="form-horizontal" role="form" method="POST">
+      <div class="jumbotron">
+        <h1>Novo Projeto</h1>
+        <p>Crie um novo Projeto e adicione sua primeira cadência!</p>
+       {% csrf_token %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Novo Projeto</h3>
+          </div>
+       <div class="panel-body">
+           <div class="form-group">
+                <label for="vendedor" class="col-sm-2 control-label"> Nome do Vendedor</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="vendedor" placeholder="Vendedor do projeto..."/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cliente" class="col-sm-2 control-label"> Cliente</label>
+                <div class="col-sm-10">
+                    <input type="text" name="cliente" class="form-control" placeholder="Nome da empresa..."/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contato" class="col-sm-2 control-label"> Nome do Contato</label>
+                <div class="col-sm-10">
+                    <input type="text" name="contato" class="form-control" placeholder="Contato chave do negócio..."/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nome" class="col-sm-2 control-label"> Nome do Projeto</label>
+                <div class="col-sm-10">
+                    <textarea name="nome" placeholder="Nome do projeto..." rows="2" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Primeira Cadência</h3>
+                </div>
+                    <div class="form-group">
+                        <label for="acao" class="col-sm-2 control-label"> Ação</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="acao" placeholder="Descreva a ação da cadência"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="goals" class="col-sm-2 control-label"> Goals Atingidos</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="goals" id="goals" placeholder="Metas atingidas..."/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="data_reuniao" class="col-sm-2 control-label"> Data da Cadência</label>
+                        <div class="col-sm-10">
+                            <input type="date" name="data_reuniao" class="form-control" placeholder="Data da Reunião"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="valor_esperado" class="col-sm-2 control-label"> Valor do Projeto</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="valor_esperado" placeholder="Valor esperado..."/>
+                        </div>
+                    </div>
+                </div>
+           </div>
+            <button type="submit" name="Salvar" class="btn btn-lg btn-primary"> Criar Projeto</button>
+          </div>
+         </div>
+        </div>
+    </form>
+     <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
+     <script src="{% static "dest/js/standalone/selectize.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    <script type="text/javascript">
+                $('#goals').selectize({
+                    plugins: ['remove_button'],
+                    delimiter: ',',
+                    persist: false,
+                    create: function(input) {
+                        return {
+                            value: input,
+                            text: input
+                        }
+                    }
+                });
+	</script>
+  </body>
+</html>
