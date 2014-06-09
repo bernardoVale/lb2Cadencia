@@ -1,0 +1,148 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "dest/js/standalone/stylesheet.css" %}">
+    <link href="{% static "dest/css/selectize.default.css" %}" rel="stylesheet" >
+    <link href="{% static "bootstrap/css/datepicker.css" %}" rel="stylesheet" >
+    <meta charset="UTF-8">
+    <title>Cadências</title>
+</head>
+<body>
+<form action="http://127.0.0.1:8000/novacadencia/" class="form-horizontal" role="form" method="POST">
+    {% csrf_token %}
+    <input name="proj_pk" type="hidden" value="{{ proj.pk }}">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Meu Projeto</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Vendedor</th>
+                        <th>Cliente</th>
+                        <th>Projeto</th>
+                        <th>Contato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ proj.vendedor }}</td>
+                        <td>{{ proj.cliente }}</td>
+                        <td>{{ proj.nome }}</td>
+                        <td>{{ proj.contato }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ação</th>
+                        <th>Data da Cadência</th>
+                        <th>Valor Esperado</th>
+                        <th>Goals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cad in proj.cadencias %}
+                    <tr>
+                        <td>{{ cad.acao }}</td>
+                        <td>{{ cad.data_reuniao }}</td>
+                        <td>{{ cad.valor_esperado }}</td>
+                        <td>{% for goal in cad.goals %} {{ goal }} {% endfor %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Nova Cadência</h3>
+        </div>
+        <div class="form-group {%if form.acao.errors %}has-error has-feedback{%endif%}">
+                        <label for="acao" class="col-sm-2 control-label"> Ação</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="acao" placeholder="Descreva a ação da cadência"></textarea>
+                        </div>
+                    </div>
+        <div class="form-group {%if form.goals.errors %}has-error has-feedback{%endif%}">
+                        <label for="goals" class="col-sm-2 control-label "> Goals Atingidos</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="{%if form.goals.errors %}has-error has-feedback{%endif%}" name="goals" id="goals" placeholder="Metas atingidas..."/>
+                        </div>
+                    </div>
+        <div class="form-group {%if form.data_reuniao.errors %}has-error has-feedback{%endif%}">
+                        <label for="data_reuniao" class="col-sm-2 control-label "> Data da Cadência</label>
+                        <div class="input-append date col-sm-10">
+                            <input type="text" name="data_reuniao" id="data_reuniao" data-format="dd/MM/yyyy"
+                                   class="form-control" placeholder="Data da Reunião"/>
+                        </div>
+                    </div>
+        <div class="form-group {%if form.valor_esperado.errors %}has-error has-feedback{%endif%}">
+                        <label for="valor_esperado" class="col-sm-2 control-label"> Valor do Projeto</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="valor_esperado" name="valor_esperado" placeholder="Valor esperado..."/>
+                        </div>
+                    </div>
+    <button type="submit" name="Salvar" class="btn btn-lg btn-primary" onclick="destroyMask();"> Adicionar Cadência</button>
+    </div>
+</form>
+    <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
+    <script src="{% static "dest/js/standalone/selectize.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    <script src="{% static "bootstrap/js/jquery.maskMoney.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript">
+
+                function destroyMask(){
+                    document.getElementById('valor_esperado').value = $('#valor_esperado')
+                            .maskMoney('unmasked')[0];
+                }
+                var data_reuniao = $('#data_reuniao').datepicker({
+                    onRender: function(date) {
+                        return date
+                    }
+                }).on('changeDate', function(ev) {
+                    data_reuniao.hide();
+                }).data('datepicker');
+
+                $("#valor_esperado").maskMoney({
+                    prefix:'R$ ',
+                    allowNegative: false,
+                    thousands:'.',
+                    decimal:',',
+                    affixesStay: false});
+                $('#goals').selectize({
+                    plugins: ['remove_button'],
+                    persist: false,
+                    maxItems: null,
+                    valueField: 'goal',
+                    labelField: 'goal',
+                    searchField: ['goal'],
+                    sortField: [ 'goal'],
+                    options: [
+                        {goal: 'Ro Aprovado'},
+                        {goal: 'Sabemos o Target'},
+                        {goal: 'Cliente tem crédito aprovado'},
+                        {goal: 'Sabemos o WN (Why Now)'},
+                        {goal: 'Falamos com quem decide'},
+                        {goal: 'Sabemos a data para fechamento'},
+                        {goal: 'Conhecemos concorrente'},
+                        {goal: 'Enviada a Proposta'},
+                        {goal: 'Vitória Verbal'},
+                        {goal: 'Vitória Formal'}
+                    ],
+                    create: function(input) {
+                        {
+                            return {goal: input};
+                        }
+                    }
+                });
+	</script>
+</body>
+</html>

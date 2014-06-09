@@ -4,4 +4,5 @@ from django.conf.urls import *
 urlpatterns = patterns('',
     url(r'^$', 'lb2Cadencia.reuniao.views.index'),
     url(r'^cadencia/', 'lb2Cadencia.reuniao.views.cadencia'),
+    url(r'^novacadencia/', 'lb2Cadencia.reuniao.views.novacadencia'),
 )

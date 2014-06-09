@@ -73,34 +73,70 @@
                     <div class="form-group">
                         <label for="data_reuniao" class="col-sm-2 control-label"> Data da Cadência</label>
                         <div class="col-sm-10">
-                            <input type="date" name="data_reuniao" class="form-control" placeholder="Data da Reunião"/>
+                            <input type="text" id="data_reuniao" name="data_reuniao" class="form-control" placeholder="Data da Reunião"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="valor_esperado" class="col-sm-2 control-label"> Valor do Projeto</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" name="valor_esperado" placeholder="Valor esperado..."/>
+                            <input type="text" class="form-control" id="valor_esperado" name="valor_esperado" placeholder="Valor esperado..."/>
                         </div>
                     </div>
                 </div>
            </div>
-            <button type="submit" name="Salvar" class="btn btn-lg btn-primary"> Criar Projeto</button>
+            <button type="submit" name="Salvar" class="btn btn-lg btn-primary" onclick="destroyMask();">
+                Criar Projeto</button>
           </div>
          </div>
         </div>
     </form>
-     <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
-     <script src="{% static "dest/js/standalone/selectize.js" %}"></script>
+    <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
+    <script src="{% static "dest/js/standalone/selectize.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    <script src="{% static "bootstrap/js/jquery.maskMoney.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap-datepicker.js" %}"></script>
+    <link href="{% static "bootstrap/css/datepicker.css" %}" rel="stylesheet" >
     <script type="text/javascript">
+                function destroyMask(){
+                    document.getElementById('valor_esperado').value = $('#valor_esperado')
+                            .maskMoney('unmasked')[0];
+                }
+                var data_reuniao = $('#data_reuniao').datepicker({
+                    onRender: function(date) {
+                        return date
+                    }
+                }).on('changeDate', function(ev) {
+                    data_reuniao.hide();
+                }).data('datepicker');
+                $("#valor_esperado").maskMoney({
+                    prefix:'R$ ',
+                    allowNegative: false,
+                    thousands:'.',
+                    decimal:',',
+                    affixesStay: false});
                 $('#goals').selectize({
                     plugins: ['remove_button'],
-                    delimiter: ',',
                     persist: false,
+                    maxItems: null,
+                    valueField: 'goal',
+                    labelField: 'goal',
+                    searchField: ['goal'],
+                    sortField: [ 'goal'],
+                    options: [
+                        {goal: 'Ro Aprovado'},
+                        {goal: 'Sabemos o Target'},
+                        {goal: 'Cliente tem crédito aprovado'},
+                        {goal: 'Sabemos o WN (Why Now)'},
+                        {goal: 'Falamos com quem decide'},
+                        {goal: 'Sabemos a data para fechamento'},
+                        {goal: 'Conhecemos concorrente'},
+                        {goal: 'Enviada a Proposta'},
+                        {goal: 'Vitória Verbal'},
+                        {goal: 'Vitória Formal'}
+                    ],
                     create: function(input) {
-                        return {
-                            value: input,
-                            text: input
+                        {
+                            return {goal: input};
                         }
                     }
                 });

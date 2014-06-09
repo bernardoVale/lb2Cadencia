@@ -3,12 +3,14 @@
 <html lang="pt-br">
     <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
       <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Cadências</title>
 </head>
 <body>
     <form action="http://127.0.0.1:8000/cadencia/" class="form-inline" role="form" method="POST">
         {% csrf_token %}
+        <input type="hidden" name="action" value="search">
         <div class="jumbotron">
             <h1>Meus Projetos</h1>
             <p>Encontre seu projeto utilizando os campos de pesquisa!</p>
@@ -35,13 +37,22 @@
                         <input type="text" name="nome"
                                class="form-control" placeholder="Nome do projeto..."/>
                     </div>
+                    <div class="form-group">
+                        <label for="status" class="sr-only"> Status</label>
+                        <select class="form-control" name="status">
+                            <option value="True">Somente ativos</option>
+                            <option value="False">Somente finalizados</option>
+                        </select>
+                    </div>
                     <button type="submit" name="Salvar"
-                            class="btn btn-lg btn-primary"> Pesquisar</button>
+                            class="btn btn-lg btn-primary fa fa-search"> Pesquisar</button>
                 </div>
             </div>
         </div>
     </form>
     {% if proj.count > 0 %}
+    <form method="POST">
+    {% csrf_token %}
     <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Projetos Encontrados</h3>
@@ -54,6 +65,7 @@
                                 <th>Cliente</th>
                                 <th>Projeto</th>
                                 <th>Contato</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,12 +75,32 @@
                                 <td>{{ p.cliente }}</td>
                                 <td>{{ p.nome }}</td>
                                 <td>{{ p.contato }}</td>
+                                <td>
+                                    {% if p.ativo == True %}
+                                    <button type="submit"
+                                            class="btn btn-success btn fa fa-plus" name="action" value="save"> Nova Cadência
+                                    </button>
+                                    <button type="submit"
+                                            class="btn btn-danger btn fa fa-trash-o" name="action" value="delete"> Encerrar Projeto
+                                    </button>
+                                    {% else %}
+                                        <button type="submit"
+                                            class="btn btn-success btn fa fa-recycle" name="action" value="restore">
+                                            Restaurar Projeto
+                                        </button>
+                                    {% endif %}
+                                    <input type="hidden" name="td_vendedor" value="{{ p.vendedor }}"/>
+                                    <input type="hidden" name="td_cliente" value="{{ p.cliente }}"/>
+                                    <input type="hidden" name="td_nome" value="{{ p.nome }}"/>
+                                    <input type="hidden" name="p_id" value="{{ p.pk }}"/>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
     </div>
+    </form>
     {% endif %}
     <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
