@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+      <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+      <link rel="stylesheet" href="{% static "dest/js/standalone/stylesheet.css" %}">
+      <link href="{% static "dest/css/selectize.default.css" %}" rel="stylesheet" >
+      <title>{% block title %}LB2 Cadencia{% endblock %}</title>
+  </head>
+<body>
+{% block navbar %}
+ <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">LB2 Cadencia</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/projeto">Novo Projeto</a></li>
+            <li><a href="/cadencia">Minhas Cadências</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+<div id="content">{% block content %}{% endblock %}</div>
+</body>
+</html>

@@ -8,7 +8,12 @@ from datetime import *
 from datetime import datetime
 import datetime
 
-
+def home(request):
+    return render_to_response('home.html',
+                              context_instance=RequestContext(request))
+def base(request):
+    return render_to_response('base.html',
+                              context_instance=RequestContext(request))
 def novacadencia(request):
     if request.method == 'POST':
         proj = Projeto.objects.get(pk=request.POST['proj_pk'])
@@ -81,7 +86,7 @@ def cadencia(request):
 
 
 #Refatorar!
-def index(request):
+def projeto(request):
     proj = Projeto
     today = datetime.date
     if request.method == 'POST':
@@ -105,5 +110,5 @@ def index(request):
         cad.goals = g
         proj.cadencias = [cad]
         proj.save()
-    return render_to_response('index.html', {'proj': proj},
+    return render_to_response('projeto.html', {'proj': proj},
                               context_instance=RequestContext(request))
