@@ -1,14 +1,14 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="pt-br">
+{% block css %}
     <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
-      <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <title>Cadências</title>
-</head>
-<body>
-    <form action="http://127.0.0.1:8000/cadencia/" class="form-inline" role="form" method="POST">
+{% endblock %}
+{% block title %}Minhas Cadências{% endblock %}
+
+{% block content %}
+<form action="http://127.0.0.1:8000/cadencia/" class="form-inline" role="form" method="POST">
         {% csrf_token %}
         <input type="hidden" name="action" value="search">
         <div class="jumbotron">
@@ -100,7 +100,4 @@
     </div>
     </form>
     {% endif %}
-    <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
-</body>
-</html>
+{% endblock %}

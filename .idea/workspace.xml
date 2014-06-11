@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d55e0628-4837-4fdc-97e0-3665e89b1401" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lb2Cadencia/templates/index.html" afterPath="$PROJECT_DIR$/lb2Cadencia/templates/projeto.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lb2Cadencia/urls.py" afterPath="$PROJECT_DIR$/lb2Cadencia/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lb2Cadencia/reuniao/views.py" afterPath="$PROJECT_DIR$/lb2Cadencia/reuniao/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lb2Cadencia/templates/base.html" afterPath="$PROJECT_DIR$/lb2Cadencia/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lb2Cadencia/templates/cadencia.html" afterPath="$PROJECT_DIR$/lb2Cadencia/templates/cadencia.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html" afterPath="$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lb2Cadencia/templates/projeto.html" afterPath="$PROJECT_DIR$/lb2Cadencia/templates/projeto.html" />
     </list>
     <ignored path="lb2Cadencia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cadencia.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="cadencia.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/cadencia.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3305785" vertical-offset="15" max-vertical-offset="1665">
-              <caret line="9" column="6" selection-start-line="0" selection-start-column="0" selection-end-line="105" selection-end-column="7" />
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1620">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -69,8 +69,8 @@
       <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="195">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="195">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -79,8 +79,8 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.541667" vertical-offset="224" max-vertical-offset="645">
-              <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
+            <state vertical-scroll-proportion="-12.541667" vertical-offset="269" max-vertical-offset="705">
+              <caret line="38" column="68" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -89,9 +89,11 @@
       <file leaf-file-name="projeto.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/projeto.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="12.5" vertical-offset="300" max-vertical-offset="2265">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1440">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="43" />
+              <folding>
+                <element signature="tag#script#5" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="novacadencia.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="novacadencia.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.833333" vertical-offset="160" max-vertical-offset="2145">
-              <caret line="36" column="42" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.87603307" vertical-offset="1707" max-vertical-offset="2115">
+              <caret line="135" column="14" selection-start-line="135" selection-start-column="14" selection-end-line="135" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -138,17 +140,17 @@
         <option value="$USER_HOME$/Downloads/describw.py" />
         <option value="$USER_HOME$/Downloads/stt_google.py" />
         <option value="$USER_HOME$/Downloads/teste.py" />
-        <option value="$PROJECT_DIR$/lb2Cadencia/templates/cadencia.html" />
-        <option value="$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html" />
         <option value="$PROJECT_DIR$/lb2Cadencia/reuniao/models.py" />
         <option value="$PROJECT_DIR$/lb2Cadencia/reuniao/forms.py" />
         <option value="$PROJECT_DIR$/lb2Cadencia/templates/bar.html" />
         <option value="$PROJECT_DIR$/lb2Cadencia/templates/index.html" />
         <option value="$PROJECT_DIR$/lb2Cadencia/urls.py" />
         <option value="$PROJECT_DIR$/lb2Cadencia/reuniao/views.py" />
-        <option value="$PROJECT_DIR$/lb2Cadencia/templates/projeto.html" />
-        <option value="$PROJECT_DIR$/lb2Cadencia/templates/base.html" />
         <option value="$PROJECT_DIR$/lb2Cadencia/templates/home.html" />
+        <option value="$PROJECT_DIR$/lb2Cadencia/templates/base.html" />
+        <option value="$PROJECT_DIR$/lb2Cadencia/templates/cadencia.html" />
+        <option value="$PROJECT_DIR$/lb2Cadencia/templates/projeto.html" />
+        <option value="$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html" />
       </list>
     </option>
   </component>
@@ -877,7 +879,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="960">
           <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
-          <folding />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -909,7 +913,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="960">
           <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
-          <folding />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -941,7 +947,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4" max-vertical-offset="705">
           <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-          <folding />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -973,7 +981,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="630">
           <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
-          <folding />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1005,7 +1015,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="630">
           <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
-          <folding />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1037,7 +1049,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="630">
           <caret line="23" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="7" />
-          <folding />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1202,14 +1216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.833333" vertical-offset="160" max-vertical-offset="2145">
-          <caret line="36" column="42" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lb2Cadencia/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
@@ -1228,34 +1234,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.541667" vertical-offset="224" max-vertical-offset="645">
-          <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="195">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="376">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/projeto.html">
+    <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="12.5" vertical-offset="300" max-vertical-offset="2265">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="-12.541667" vertical-offset="269" max-vertical-offset="705">
+          <caret line="38" column="68" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/cadencia.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3305785" vertical-offset="15" max-vertical-offset="1665">
-          <caret line="9" column="6" selection-start-line="0" selection-start-column="0" selection-end-line="105" selection-end-column="7" />
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1620">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/projeto.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1440">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="43" />
+          <folding>
+            <element signature="tag#script#5" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lb2Cadencia/templates/novacadencia.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.87603307" vertical-offset="1707" max-vertical-offset="2115">
+          <caret line="135" column="14" selection-start-line="135" selection-start-column="14" selection-end-line="135" selection-end-column="14" />
           <folding />
         </state>
       </provider>

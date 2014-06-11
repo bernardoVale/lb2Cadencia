@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-      <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
-      <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
-      <link rel="stylesheet" href="{% static "dest/js/standalone/stylesheet.css" %}">
-      <link href="{% static "dest/css/selectize.default.css" %}" rel="stylesheet" >
+      {% block css %}
+        <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+        <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+      {% endblock %}
       <title>{% block title %}LB2 Cadencia{% endblock %}</title>
   </head>
 <body>
@@ -34,5 +34,9 @@
     </nav>
 {% endblock %}
 <div id="content">{% block content %}{% endblock %}</div>
+{% block scripts %}
+    <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+{% endblock %}
 </body>
 </html>

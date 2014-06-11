@@ -1,17 +1,14 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
+{% block css %}
     <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static "dest/js/standalone/stylesheet.css" %}">
     <link href="{% static "dest/css/selectize.default.css" %}" rel="stylesheet" >
     <link href="{% static "bootstrap/css/datepicker.css" %}" rel="stylesheet" >
-    <meta charset="UTF-8">
-    <title>Cadências</title>
-</head>
-<body>
+{% endblock %}
+{% block title %}Nova Cadência{% endblock %}
+{% block content %}
 <form action="http://127.0.0.1:8000/novacadencia/" class="form-horizontal" role="form" method="POST">
     {% csrf_token %}
     <input name="proj_pk" type="hidden" value="{{ proj.pk }}">
@@ -82,6 +79,8 @@
     <button type="submit" name="Salvar" class="btn btn-lg btn-primary" onclick="destroyMask();"> Adicionar Cadência</button>
     </div>
 </form>
+{% endblock %}
+{% block scripts %}
     <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
     <script src="{% static "dest/js/standalone/selectize.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
@@ -134,5 +133,4 @@
                     }
                 });
 	</script>
-</body>
-</html>
+{% endblock %}
