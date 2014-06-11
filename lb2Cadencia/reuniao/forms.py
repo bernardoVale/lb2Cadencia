@@ -14,6 +14,7 @@ class FindProjetoForm(forms.Form):
 
 class CadenciaForm(forms.Form):
     acao = forms.CharField(max_length=100, required=True)
+    contato = forms.CharField(max_length=40, required=True)
     data_reuniao = forms.DateTimeField(required=True)
-    valor_esperado = forms.FloatField(required=True, min_value=0.0)
+    valor_esperado = forms.FloatField(required=True, min_value=1.0)
     goals = forms.CharField(required=True)

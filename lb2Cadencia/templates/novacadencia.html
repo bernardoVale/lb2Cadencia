@@ -17,31 +17,14 @@
     <input name="proj_pk" type="hidden" value="{{ proj.pk }}">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Meu Projeto</h3>
+            <h1>{{ proj.nome }}</h1>
         </div>
         <div class="panel-body">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Vendedor</th>
-                        <th>Cliente</th>
-                        <th>Projeto</th>
-                        <th>Contato</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ proj.vendedor }}</td>
-                        <td>{{ proj.cliente }}</td>
-                        <td>{{ proj.nome }}</td>
-                        <td>{{ proj.contato }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
                         <th>Ação</th>
+                        <th>Contato</th>
                         <th>Data da Cadência</th>
                         <th>Valor Esperado</th>
                         <th>Goals</th>
@@ -51,6 +34,7 @@
                     {% for cad in proj.cadencias %}
                     <tr>
                         <td>{{ cad.acao }}</td>
+                        <td>{{ cad.contato }}</td>
                         <td>{{ cad.data_reuniao }}</td>
                         <td>{{ cad.valor_esperado }}</td>
                         <td>{% for goal in cad.goals %} {{ goal }} {% endfor %}</td>
@@ -65,11 +49,17 @@
             <h3 class="panel-title">Nova Cadência</h3>
         </div>
         <div class="form-group {%if form.acao.errors %}has-error has-feedback{%endif%}">
-                        <label for="acao" class="col-sm-2 control-label"> Ação</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" name="acao" placeholder="Descreva a ação da cadência"></textarea>
-                        </div>
-                    </div>
+            <label for="acao" class="col-sm-2 control-label"> Ação</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="acao" placeholder="Descreva a ação da cadência"></textarea>
+            </div>
+        </div>
+        <div class="form-group {%if form.contato.errors %}has-error has-feedback{%endif%}">
+            <label for="contato" class="col-sm-2 control-label"> Contato</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="contato" placeholder="Contato atual no projeto."></textarea>
+            </div>
+        </div>
         <div class="form-group {%if form.goals.errors %}has-error has-feedback{%endif%}">
                         <label for="goals" class="col-sm-2 control-label "> Goals Atingidos</label>
                         <div class="col-sm-10">

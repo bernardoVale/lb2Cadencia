@@ -4,6 +4,8 @@ from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from lb2Cadencia.reuniao.forms import FindProjetoForm, CadenciaForm
 from models import Projeto, Cadencia
+from datetime import *
+from datetime import datetime
 import datetime
 
 
@@ -16,11 +18,13 @@ def novacadencia(request):
                 acao=request.POST['acao'],
                 data_reuniao=request.POST['data_reuniao'],
                 valor_esperado=request.POST['valor_esperado'],
+                contato = request.POST['contato'],
                 goals = request.POST['goals'].split(','))
             proj.update(add_to_set__cadencias=cad)
             proj.save()
             #Refresh no objeto apos salvar
             proj = Projeto.objects.get(pk=proj.pk)
+
         return render_to_response('novacadencia.html',{'form':form , 'proj' : proj},
                                   context_instance=RequestContext(request))
     return render_to_response('novacadencia.html',
@@ -84,12 +88,17 @@ def index(request):
         proj = Projeto(
             nome=request.POST['nome'],
             vendedor=request.POST['vendedor'],
-            contato=request.POST['contato'],
             cliente=request.POST['cliente'])
         g = request.POST['goals'].split(',')
+        #todo remover esse trecho de cast da data que
+        #nao funciona no apache
+        data_reuniao = request.POST['data_reuniao']
+        format = '%m/%d/%Y'
+        d = datetime.datetime.strptime(data_reuniao,format)
         cad = Cadencia(
             acao=request.POST['acao'],
-            data_reuniao=request.POST['data_reuniao'],
+            data_reuniao=d,
+            contato=request.POST['contato'],
             valor_esperado=request.POST['valor_esperado']
         )
         #Tratamento das hashtags para os goals
