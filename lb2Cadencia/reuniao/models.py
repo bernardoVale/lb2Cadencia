@@ -93,6 +93,7 @@ class Projeto(Document):
           db.projeto.find({ativo:true},{cadencias:{$slice: -1}}).forEach(function(doc) {
             doc["cadencias"].forEach(function(subdoc){
               var goals = subdoc["goals"];
+              val = 0.0;
               for (var goal; goal = goals.pop();){
                 if (goal == "Enviada a Proposta"){
             	  val = subdoc["valor_esperado"];
