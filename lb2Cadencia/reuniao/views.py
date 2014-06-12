@@ -8,8 +8,20 @@ from datetime import *
 from datetime import datetime
 import datetime
 
+
 def home(request):
-    return render_to_response('home.html',
+    #Quantidade de Propostas ativas
+    qpa =  len(Projeto.objects(ativo=True))
+    print qpa
+    # Valor das propostas ativa
+    vpa = Projeto.sum_projetos_ativos()
+    print vpa
+    pipe = Projeto.pipeline()
+    print pipe
+    qt_propostas = Projeto.qt_propostas()
+    print qt_propostas
+    return render_to_response('home.html',{'qpa':qpa,'vpa':vpa
+                            ,'pipe':pipe,'qt_propostas':qt_propostas},
                               context_instance=RequestContext(request))
 def base(request):
     return render_to_response('base.html',

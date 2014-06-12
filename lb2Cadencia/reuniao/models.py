@@ -44,6 +44,68 @@ class Projeto(Document):
     ativo = BooleanField(required=True,default=True)
     meta = {'queryset_class': ProjetoQuerySet}
 
+    @classmethod
+    # Soma de propostas de projeto ativos.
+    def pipeline(document):
+        code = """
+        function() {
+          var total = 0.0;
+          var val = 0.0
+          db.projeto.find({ativo:true},{cadencias:{$slice: -1}}).forEach(function(doc) {
+            doc["cadencias"].forEach(function(subdoc){
+              val = subdoc["valor_esperado"];
+            });
+            total = total + val;
+          });
+          return total;
+        }
+        """
+        return document.objects.exec_js(code)
+
+    @classmethod
+    # Quantidade de propostas ativas.
+    def qt_propostas(document):
+        code = """
+        function() {
+         var count = 0;
+          db.projeto.find({ativo:true},{cadencias:{$slice: -1}}).forEach(function(doc) {
+            doc["cadencias"].forEach(function(subdoc){
+              var goals = subdoc["goals"];
+              for (var goal; goal = goals.pop();){
+                if (goal == "Enviada a Proposta"){
+                  count = count + 1;
+                }
+              }
+            });
+          });
+          return count;
+        }
+        """
+        return document.objects.exec_js(code)
+
+    @classmethod
+    # Soma de propostas de projeto ativos.
+    def sum_projetos_ativos(document):
+        code = """
+        function() {
+          var total = 0.0;
+          var val = 0.0
+          db.projeto.find({ativo:true},{cadencias:{$slice: -1}}).forEach(function(doc) {
+            doc["cadencias"].forEach(function(subdoc){
+              var goals = subdoc["goals"];
+              for (var goal; goal = goals.pop();){
+                if (goal == "Enviada a Proposta"){
+            	  val = subdoc["valor_esperado"];
+            	}
+              }
+            });
+            total = total + val;
+          });
+          return total;
+        }
+        """
+        return document.objects.exec_js(code)
+
     # @classmethod
     # def refresh(self):
     #     proj =  Projeto.objects.get(

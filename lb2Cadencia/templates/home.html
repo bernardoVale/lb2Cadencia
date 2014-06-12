@@ -3,5 +3,26 @@
 {% block title %}LB2 Cadencia{% endblock %}
 
 {% block content %}
-    <h1> There is no place like 127.0.0.1</h1>
+    <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Propostas Ativas</th>
+                        <th>{{ qpa|default:"Sem propostas ativas" }}</th>
+                    </tr>
+                    <tr>
+                        <th>Total de Propostas</th>
+                        <th>{{ vpa|default:"Sem propostas ativas" }}</th>
+                    </tr>
+                    <tr>
+                        <th>Pipeline</th>
+                        <th>{{ pipe|default:"Sem propostas ativas" }}</th>
+                    </tr>
+                    <tr>
+                        <th>Quantidade de Projetos</th>
+                        <th>{{ qt_propostas|default:"Não existe nenhum projeto" }}</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
 {% endblock %}
