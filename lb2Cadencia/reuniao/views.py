@@ -2,7 +2,7 @@
 #coding: utf8
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
-from lb2Cadencia.reuniao.forms import FindProjetoForm, CadenciaForm
+from lb2Cadencia.reuniao.forms import FindProjetoForm, CadenciaForm, ProjetoForm, CadenciaMongoForm
 from models import Projeto, Cadencia
 from datetime import *
 from datetime import datetime
@@ -102,25 +102,30 @@ def projeto(request):
     proj = Projeto
     today = datetime.date
     if request.method == 'POST':
-        proj = Projeto(
-            nome=request.POST['nome'],
-            vendedor=request.POST['vendedor'],
-            cliente=request.POST['cliente'])
-        g = request.POST['goals'].split(',')
-        #todo remover esse trecho de cast da data que
-        #nao funciona no apache
-        data_reuniao = request.POST['data_reuniao']
-        format = '%m/%d/%Y'
-        d = datetime.datetime.strptime(data_reuniao,format)
-        cad = Cadencia(
-            acao=request.POST['acao'],
-            data_reuniao=d,
-            contato=request.POST['contato'],
-            valor_esperado=request.POST['valor_esperado']
-        )
-        #Tratamento das hashtags para os goals
-        cad.goals = g
-        proj.cadencias = [cad]
-        proj.save()
+        form = ProjetoForm(request.POST)
+        form_cadencia = CadenciaMongoForm(request.POST)
+        if form.is_valid() and form_cadencia.is_valid():
+            proj = Projeto(
+                nome=request.POST['nome'],
+                vendedor=request.POST['vendedor'],
+                cliente=request.POST['cliente'])
+            g = request.POST['goals'].split(',')
+            #todo remover esse trecho de cast da data que
+            #nao funciona no apache
+            data_reuniao = request.POST['data_reuniao']
+            format = '%m/%d/%Y'
+            d = datetime.datetime.strptime(data_reuniao,format)
+            cad = Cadencia(
+                acao=request.POST['acao'],
+                data_reuniao=d,
+                contato=request.POST['contato'],
+                valor_esperado=request.POST['valor_esperado']
+            )
+            #Tratamento das hashtags para os goals
+            cad.goals = g
+            proj.cadencias = [cad]
+            proj.save()
+        return render_to_response('projeto.html', {'proj': proj,'form': form, 'form_cadencia':form_cadencia},
+                              context_instance=RequestContext(request))
     return render_to_response('projeto.html', {'proj': proj},
                               context_instance=RequestContext(request))

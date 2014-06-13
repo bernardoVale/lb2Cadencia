@@ -11,7 +11,7 @@ class Cadencia(EmbeddedDocument):
     acao = StringField(max_length=100, required=True, verbose_name='Ação')
     data_reuniao = DateTimeField(required=True, verbose_name='Data da Reunião' , default=datetime.now())
     valor_esperado = FloatField(required=True, min_value=0.0, verbose_name='Valor Esperado')
-    contato = StringField(max_length=40 , verbose_name='Contato Atual')
+    contato = StringField(max_length=40 ,required=True, verbose_name='Contato Atual')
     goals = ListField(StringField(max_length=50), verbose_name='Goals')
 
 
@@ -41,7 +41,7 @@ class Projeto(Document):
     cliente = StringField(max_length=40 , required=True , verbose_name='Cliente')
     nome = StringField(max_length=80 , required=True , verbose_name='Nome')
     cadencias = ListField(EmbeddedDocumentField(Cadencia))
-    ativo = BooleanField(required=True,default=True)
+    ativo = BooleanField(default=True)
     meta = {'queryset_class': ProjetoQuerySet}
 
     @classmethod

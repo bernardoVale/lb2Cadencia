@@ -1,10 +1,19 @@
 from django.forms import ModelForm
 from mongodbforms import EmbeddedDocumentForm, DocumentForm
+from mongoforms import MongoForm
 from lb2Cadencia.reuniao.models import Cadencia, Projeto
 
 __author__ = 'bernardovale'
 from django import forms
 
+class ProjetoForm(DocumentForm):
+    class Meta:
+        document = Projeto
+
+class CadenciaMongoForm(MongoForm):
+    class Meta:
+        document = Cadencia
+        fields = ('acao', 'contato', 'data_reuniao', 'valor_esperado' )
 
 class FindProjetoForm(forms.Form):
     nome = forms.CharField(max_length=80,required=False)
