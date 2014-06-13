@@ -1,14 +1,14 @@
-from django.forms import ModelForm
-from mongodbforms import EmbeddedDocumentForm, DocumentForm
 from mongoforms import MongoForm
 from lb2Cadencia.reuniao.models import Cadencia, Projeto
 
 __author__ = 'bernardovale'
 from django import forms
 
-class ProjetoForm(DocumentForm):
+
+class ProjetoForm(MongoForm):
     class Meta:
         document = Projeto
+        fields = ('nome','vendedor','cliente')
 
 class CadenciaMongoForm(MongoForm):
     class Meta:
