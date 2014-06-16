@@ -4,22 +4,20 @@ from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from lb2Cadencia.reuniao.forms import FindProjetoForm, CadenciaForm, ProjetoForm, CadenciaMongoForm
 from models import Projeto, Cadencia
+import locale
 from datetime import *
 from datetime import datetime
 import datetime
 
 
 def home(request):
+    locale.setlocale( locale.LC_ALL, 'pt_BR' )
     #Quantidade de Propostas ativas
     qpa =  len(Projeto.objects(ativo=True))
-    print qpa
     # Valor das propostas ativa
-    vpa = Projeto.sum_projetos_ativos()
-    print vpa
-    pipe = Projeto.pipeline()
-    print pipe
-    qt_propostas = Projeto.qt_propostas()
-    print qt_propostas
+    vpa = locale.currency(Projeto.sum_projetos_ativos())
+    pipe = locale.currency(Projeto.pipeline())
+    qt_propostas = str(Projeto.qt_propostas())[0:-2] #corta ,0
     return render_to_response('home.html',{'qpa':qpa,'vpa':vpa
                             ,'pipe':pipe,'qt_propostas':qt_propostas},
                               context_instance=RequestContext(request))

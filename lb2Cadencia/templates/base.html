@@ -3,6 +3,7 @@
 <html lang="pt-br">
   <head>
       {% block css %}
+        <link href="{% static "bootstrap/css/home.css" %}" rel="stylesheet">
         <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
         <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
       {% endblock %}
@@ -30,6 +31,12 @@
             <li><a href="/cadencia">Minhas Cadências</a></li>
           </ul>
         </div>
+        <!--<ul class="nav navbar-nav navbar-right">
+            <li>Propostas Ativas:5</li>
+            <li>Total de Propostas: R$ 96.000,00</li>
+            <li>Pipeline: R$ 111.425,00</li>
+            <li>Total de Propostas:3</li>
+        </ul>-->
       </div>
     </nav>
 {% endblock %}

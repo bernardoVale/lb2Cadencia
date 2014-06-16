@@ -1,28 +1,24 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 {% block title %}LB2 Cadencia{% endblock %}
 
 {% block content %}
-    <div class="panel-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Propostas Ativas</th>
-                        <th>{{ qpa|default:"Sem propostas ativas" }}</th>
-                    </tr>
-                    <tr>
-                        <th>Total de Propostas</th>
-                        <th>{{ vpa|default:"Sem propostas ativas" }}</th>
-                    </tr>
-                    <tr>
-                        <th>Pipeline</th>
-                        <th>{{ pipe|default:"Sem propostas ativas" }}</th>
-                    </tr>
-                    <tr>
-                        <th>Quantidade de Projetos</th>
-                        <th>{{ qt_propostas|default:"Não existe nenhum projeto" }}</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+    <div class="lb2_jumbotron jumbotron" onload="mas">
+        <h1>LB2 Cadencia</h1>
+
+        <p content="asdasd"><h4 id="qpa" onload="maskMe(this.id,{{qpa}})">Quantidade de Projetos : {{ qpa|default:"Sem propostas ativas" }}</h4></p>
+        <p><h4>Projetos com Proposta : {{ qt_propostas|default:"Não existe nenhum projeto" }}</h4></p>
+        <p><h4 id="vpa">Valor Total em Propostas : {{ vpa|default:"Sem propostas ativas" }}</h4></p>
+        <p><h4>Pipeline : {{ pipe|default:"Sem propostas ativas" }}</h4></p>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script src="{% static "bootstrap/js/jquery-2.1.1.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    <script src="{% static "bootstrap/js/jquery.maskMoney.min.js" %}"></script>
+    <script type="text/javascript">
+        function maskMe(id,valor){
+            var val = $(id).maskMoney('mask', valor);
+        }
+    </script>
 {% endblock %}

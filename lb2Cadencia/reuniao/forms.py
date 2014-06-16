@@ -13,7 +13,7 @@ class ProjetoForm(MongoForm):
 class CadenciaMongoForm(MongoForm):
     class Meta:
         document = Cadencia
-        fields = ('acao', 'contato', 'data_reuniao', 'valor_esperado' )
+        fields = ('acao', 'contato', 'valor_esperado' )
 
 class FindProjetoForm(forms.Form):
     nome = forms.CharField(max_length=80,required=False)
