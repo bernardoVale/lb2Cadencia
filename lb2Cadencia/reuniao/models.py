@@ -63,6 +63,33 @@ class Projeto(Document):
         return document.objects.exec_js(code)
 
     @classmethod
+    def goals_por_cad(document,vendedor,cliente,nome):
+        code = """
+            function() {
+                var data_goals = [[]];
+                var i = 0;
+                var cad = []
+                var v = options.vendedor;
+                var c = options.cliente;
+                var n = options.nome;
+            db.projeto.aggregate(
+              {$unwind: "$cadencias"},
+              {$match: {"vendedor" : v, "cliente" : c, "nome" : n}},
+              {$group: {_id: "$cadencias"}}
+            ).forEach(function(doc){
+                var cad = doc["_id"]
+                data_goals[i] = [];
+                data_goals[i][0] = cad["data_reuniao"]
+                data_goals[i][1] = cad["goals"].length;
+                i = i + 1;
+            }
+            );
+            return data_goals;
+            }
+        """
+        options = {'vendedor' : vendedor, 'cliente' : cliente, 'nome': nome}
+        return document.objects.exec_js(code,**options)
+    @classmethod
     # Quantidade de propostas ativas.
     def qt_propostas(document):
         code = """

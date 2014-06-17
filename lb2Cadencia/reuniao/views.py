@@ -11,6 +11,7 @@ import datetime
 
 
 def home(request):
+    vendedor = "Bernardo Vale"
     locale.setlocale( locale.LC_ALL, 'pt_BR' )
     #Quantidade de Propostas ativas
     qpa =  len(Projeto.objects(ativo=True))
@@ -18,6 +19,8 @@ def home(request):
     vpa = locale.currency(Projeto.sum_projetos_ativos())
     pipe = locale.currency(Projeto.pipeline())
     qt_propostas = str(Projeto.qt_propostas())[0:-2] #corta ,0
+    goals = Projeto.goals_por_cad("Bernardo Vale","Sementes Sefrinho","Box LB2")
+    print goals
     return render_to_response('home.html',{'qpa':qpa,'vpa':vpa
                             ,'pipe':pipe,'qt_propostas':qt_propostas},
                               context_instance=RequestContext(request))
