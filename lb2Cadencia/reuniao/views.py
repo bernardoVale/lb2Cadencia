@@ -34,9 +34,12 @@ def novacadencia(request):
     if request.method == 'POST':
         form = CadenciaMongoForm(request.POST)
         if form.is_valid():
+            format = '%m/%d/%Y'
+            data_reuniao=request.POST['data_reuniao']
+            d = datetime.datetime.strptime(data_reuniao,format)
             cad = Cadencia(
                 acao=request.POST['acao'],
-                data_reuniao=request.POST['data_reuniao'],
+                data_reuniao=d,
                 valor_esperado=request.POST['valor_esperado'],
                 contato = request.POST['contato'],
                 goals = request.POST['goals'].split(','))
