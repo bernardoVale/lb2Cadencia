@@ -36,6 +36,20 @@ class ProjetoQuerySet(QuerySet):
     def get_projeto(self,v,p,c,s):
        return self.filter(vendedor__icontains=v,nome__icontains=p,cliente__icontains=c,ativo=s)
 
+"""
+Esse capudo serve para organizar a lista que recebo
+do banco.
+"""
+def proj_graph(list):
+        format = '%d/%m/%Y'
+        data = []
+        goals = []
+        #split array
+        for i in list:
+            data.append(i[0].strftime(format))
+            goals.append(i[1])
+        return [data,goals]
+
 class Projeto(Document):
     vendedor = StringField(max_length=30 , required=True , verbose_name='Vendedor')
     cliente = StringField(max_length=40 , required=True , verbose_name='Cliente')
@@ -61,34 +75,35 @@ class Projeto(Document):
         }
         """
         return document.objects.exec_js(code)
-
     @classmethod
     def goals_por_cad(document,vendedor,cliente,nome):
         code = """
             function() {
                 var data_goals = [[]];
                 var i = 0;
-                var cad = []
+                var cad = [];
                 var v = options.vendedor;
                 var c = options.cliente;
                 var n = options.nome;
             db.projeto.aggregate(
-              {$unwind: "$cadencias"},
-              {$match: {"vendedor" : v, "cliente" : c, "nome" : n}},
-              {$group: {_id: "$cadencias"}}
-            ).forEach(function(doc){
-                var cad = doc["_id"]
-                data_goals[i] = [];
-                data_goals[i][0] = cad["data_reuniao"]
-                data_goals[i][1] = cad["goals"].length;
-                i = i + 1;
-            }
-            );
+                {$unwind: '$cadencias'},
+                {$match: {"vendedor" : v, "cliente" : c, "nome" : n}},
+                {$sort: {'cadencias.data_reuniao': 1}},
+                {$group: {_id: '$_id', 'cadencias': {$push: '$cadencias'}}},
+                {$project: {'cadencias': '$cadencias'}}).forEach(function(doc){
+                var cad = doc["cadencias"];
+                cad.forEach(function(cadDoc){
+                    data_goals[i] = [];
+                    data_goals[i][0] = cadDoc["data_reuniao"]
+                    data_goals[i][1] = cadDoc["goals"].length;
+                    i = i + 1;
+                });
+            });
             return data_goals;
-            }
+        }
         """
         options = {'vendedor' : vendedor, 'cliente' : cliente, 'nome': nome}
-        return document.objects.exec_js(code,**options)
+        return proj_graph(document.objects.exec_js(code,**options))
     @classmethod
     # Quantidade de propostas ativas.
     def qt_propostas(document):
