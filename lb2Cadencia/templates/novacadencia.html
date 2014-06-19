@@ -24,34 +24,45 @@
         <div class="form-group {%if form.acao.errors %}has-error has-feedback{%endif%}">
             <label for="acao" class="col-sm-2 control-label"> Ação</label>
             <div class="col-sm-10">
-                <textarea class="form-control" name="acao" placeholder="Descreva a ação da cadência"></textarea>
+                {% with proj.cadencias|last as last %}
+                <textarea class="form-control" id="acao" name="acao"
+                   placeholder="Descreva a ação da cadência">{{ last.acao }}</textarea>
+                    {% endwith %}
             </div>
         </div>
         <div class="form-group {%if form.contato.errors %}has-error has-feedback{%endif%}">
             <label for="contato" class="col-sm-2 control-label"> Contato</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="contato" placeholder="Contato atual no projeto."></textarea>
+                <input type="text" id="contato" class="form-control" name="contato" placeholder="Contato atual no projeto."
+                       {% with proj.cadencias|last as last %}
+                       value="{{ last.contato }}">{% endwith %}
             </div>
         </div>
         <div class="form-group {%if form.goals.errors %}has-error has-feedback{%endif%}">
             <label for="goals" class="col-sm-2 control-label "> Goals Atingidos</label>
             <div class="col-sm-10">
                 <input type="text" class="{%if form.goals.errors %}has-error has-feedback{%endif%}"
-                       name="goals" id="goals" placeholder="Metas atingidas..."/>
+                       name="goals" id="goals" placeholder="Metas atingidas..."
+                        value="azul,vermelhor"/>
             </div>
         </div>
         <div class="form-group {%if form.data_reuniao.errors %}has-error has-feedback{%endif%}">
             <label for="data_reuniao" class="col-sm-2 control-label "> Data da Cadência</label>
             <div class="input-append date col-sm-10">
                 <input type="text" name="data_reuniao" id="data_reuniao" data-format="dd/MM/yyyy"
-                       class="form-control" placeholder="Data da Reunião"/>
+                       class="form-control" placeholder="Data da Reunião"
+                       {% with proj.cadencias|last as last %}
+                       value="{{ last.data_reuniao|date:"SHORT_DATE_FORMAT" }}"/>
+                       {% endwith %}
                </div>
             </div>
         <div class="form-group {%if form.valor_esperado.errors %}has-error has-feedback{%endif%}">
             <label for="valor_esperado" class="col-sm-2 control-label"> Valor do Projeto</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="valor_esperado"
-                       name="valor_esperado" placeholder="Valor esperado..."/>
+                       name="valor_esperado" placeholder="Valor esperado..."
+                        {% with proj.cadencias|last as last %}
+                        value="{{ last.valor_esperado }}"/>{% endwith %}
             </div>
         </div>
         <div class="form-group">
@@ -124,7 +135,8 @@
                     thousands:'.',
                     decimal:',',
                     affixesStay: false});
-                $('#goals').selectize({
+
+                var $select = $('#goals').selectize({
                     plugins: ['remove_button'],
                     persist: false,
                     maxItems: null,
@@ -150,5 +162,13 @@
                         }
                     }
                 });
+                var control = $select[0].selectize;
+                //Goals provenientes do banco
+                {% with proj.cadencias|last as last %}
+                    {% for i in last.goals %}
+                        control.addOption({goal : "{{ i|safe }}"});
+                        control.addItem("{{ i|safe }}");
+                    {% endfor %}
+                {% endwith %}
 	</script>
 {% endblock %}

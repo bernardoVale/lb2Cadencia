@@ -34,7 +34,7 @@ def novacadencia(request):
     if request.method == 'POST':
         form = CadenciaMongoForm(request.POST)
         if form.is_valid():
-            format = '%m/%d/%Y'
+            format = '%d/%m/%Y'
             data_reuniao=request.POST['data_reuniao']
             d = datetime.datetime.strptime(data_reuniao,format)
             cad = Cadencia(
@@ -122,7 +122,7 @@ def projeto(request):
             #todo remover esse trecho de cast da data que
             #nao funciona no apache
             data_reuniao = request.POST['data_reuniao']
-            format = '%m/%d/%Y'
+            format = '%d/%m/%Y'
             d = datetime.datetime.strptime(data_reuniao,format)
             cad = Cadencia(
                 acao=request.POST['acao'],

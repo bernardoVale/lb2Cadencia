@@ -63,7 +63,9 @@
                 <div class="form-group {%if form_cadencia.data_reuniao.errors %}has-error has-feedback{%endif%}">
                     <label for="data_reuniao" class="col-sm-2 control-label"> Data da Cadência</label>
                     <div class="col-sm-10">
-                        <input type="text" id="data_reuniao" name="data_reuniao" class="form-control" placeholder="Data da Reunião"/>
+                        <input type="text" id="data_reuniao" name="data_reuniao" class="form-control"
+                               value="{% now "SHORT_DATE_FORMAT" %}"
+                               placeholder="Data da Reunião"/>
                     </div>
                 </div>
                 <div class="form-group {%if form_cadencia.valor_esperado.errors %}has-error has-feedback{%endif%}">
