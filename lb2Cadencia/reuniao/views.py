@@ -21,8 +21,10 @@ def home(request):
     vpa = locale.currency(Projeto.sum_projetos_ativos())
     pipe = locale.currency(Projeto.pipeline())
     qt_propostas = str(Projeto.qt_propostas())[0:-2] #corta ,0
+    graph = Projeto.mr_qt_propostas()
     return render_to_response('home.html',{'qpa':qpa,'vpa':vpa
-                            ,'pipe':pipe,'qt_propostas':qt_propostas},
+                            ,'pipe':pipe,'datas' : graph[0], 'propostas': graph[1],
+                                               'projetos' : graph[2],'qt_propostas':qt_propostas},
                               context_instance=RequestContext(request))
 def base(request):
     return render_to_response('base.html',
@@ -105,7 +107,6 @@ def cadencia(request):
     return render_to_response('cadencia.html',
                               context_instance=RequestContext(request))
 
-
 #Refatorar!
 def projeto(request):
     proj = Projeto
@@ -122,7 +123,7 @@ def projeto(request):
             #todo remover esse trecho de cast da data que
             #nao funciona no apache
             data_reuniao = request.POST['data_reuniao']
-            format = '%d/%m/%Y'
+            format = '%m/%d/%Y'
             d = datetime.datetime.strptime(data_reuniao,format)
             cad = Cadencia(
                 acao=request.POST['acao'],
