@@ -58,12 +58,14 @@ def dashboard_geral(list):
     data = []
     propostas = []
     projetos = []
+    pipeline = []
     for i in list:
         key = i.key
         data.append(key.strftime(format))
         propostas.append(i.value['propostas'])
         projetos.append(i.value['projetos'])
-    return [data,propostas,projetos]
+        pipeline.append(i.value['pipeline'])
+    return [data,propostas,projetos,pipeline]
 
 class Projeto(Document):
     vendedor = StringField(max_length=30 , required=True , verbose_name='Vendedor')
@@ -78,22 +80,24 @@ class Projeto(Document):
         map_f = Code(
             """
             function() {
-                    for (var idx = 0; idx < this.cadencias.length; idx++) {
-                        var key = this.cadencias[idx].data_reuniao;
-                        var value = {
-                                nome : this.vendedor+this.cliente+this.nome,
-                                goals : this.cadencias[idx].goals};
-                        emit(key, value);
-                    };
+                for (var idx = 0; idx < this.cadencias.length; idx++) {
+                    var key = this.cadencias[idx].data_reuniao;
+                    var value = {
+                            nome : this.vendedor+this.cliente+this.nome,
+                            goals : this.cadencias[idx].goals,
+                            valor : this.cadencias[idx].valor_esperado};
+                    emit(key, value);
+                };
             }
         """
         )
         # reduce to a list of tag ids and counts
         reduce_f = Code ("""
         function(data_reuniao, objs) {
-            reducedVal = { propostas: 0, projetos: 0 };
+            reducedVal = { propostas: 0, projetos: 0, pipeline : 0};
             var resultArray = [];
             for (var idx = 0; idx < objs.length; idx++) {
+                reducedVal.pipeline += objs[idx].valor;
                 if (resultArray.indexOf(objs[idx].nome) == -1){
                     resultArray.push(objs[idx].nome);
                     reducedVal.projetos += 1;
@@ -106,23 +110,25 @@ class Projeto(Document):
         };
         """)
         f = """
-        function (key, reducedVal) {
-            if (typeof reducedVal.propostas == 'undefined'){
-                if (reducedVal.goals.indexOf("Enviada a Proposta") != -1)
-                    return {
-                        propostas : 1,
-                        projetos : 1
-                    };
-                else
-                    return {
-                        propostas : 0,
-                        projetos : 1
-                    };
-            }else{
-                return reducedVal;
-            }
-        };
-        """
+            function (key, reducedVal) {
+                if (typeof reducedVal.propostas == 'undefined'){
+                    if (reducedVal.goals.indexOf("Enviada a Proposta") != -1)
+                        return {
+                            propostas : 1,
+                            projetos : 1,
+                            pipeline : reducedVal.valor
+                        };
+                    else
+                        return {
+                            propostas : 0,
+                            projetos : 1,
+                            pipeline : reducedVal.valor
+                        };
+                }else{
+                    return reducedVal;
+                }
+            };
+          """
         results = document.objects.map_reduce(map_f,reduce_f,output="inline",finalize_f=f)
         return dashboard_geral(list(results))
     @classmethod

@@ -23,8 +23,9 @@ def home(request):
     qt_propostas = str(Projeto.qt_propostas())[0:-2] #corta ,0
     graph = Projeto.mr_qt_propostas()
     return render_to_response('home.html',{'qpa':qpa,'vpa':vpa
-                            ,'pipe':pipe,'datas' : graph[0], 'propostas': graph[1],
-                                               'projetos' : graph[2],'qt_propostas':qt_propostas},
+                            ,'pipe':pipe,'datas' : graph[0], 'propostas': graph[1]
+                            ,'projetos' : graph[2] ,'pipeline' : graph[3]
+                                               ,'qt_propostas':qt_propostas},
                               context_instance=RequestContext(request))
 def base(request):
     return render_to_response('base.html',

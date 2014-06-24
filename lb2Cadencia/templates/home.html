@@ -22,6 +22,7 @@
         var datas = {{ datas|safe }};
         var propostas = {{ propostas|safe }};
         var projetos = {{ projetos|safe }};
+        var pipeline = {{ pipeline| safe }}
         $(function () {
             $('#container').highcharts({
             chart: {
@@ -54,6 +55,10 @@
                 {
                     name: 'Quant. Projetos',
                     data: projetos
+                },
+                {
+                    name: 'Pipeline',
+                    data: pipeline
                 }
             ]
             });
