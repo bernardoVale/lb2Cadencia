@@ -59,13 +59,15 @@ def dashboard_geral(list):
     propostas = []
     projetos = []
     pipeline = []
+    sum_propostas = []
     for i in list:
         key = i.key
         data.append(key.strftime(format))
         propostas.append(i.value['propostas'])
         projetos.append(i.value['projetos'])
         pipeline.append(i.value['pipeline'])
-    return [data,propostas,projetos,pipeline]
+        sum_propostas.append(i.value['sum_propostas'])
+    return [data, propostas, projetos, pipeline, sum_propostas]
 
 class Projeto(Document):
     vendedor = StringField(max_length=30 , required=True , verbose_name='Vendedor')
@@ -85,25 +87,27 @@ class Projeto(Document):
                     var value = {
                             nome : this.vendedor+this.cliente+this.nome,
                             goals : this.cadencias[idx].goals,
-                            valor : this.cadencias[idx].valor_esperado};
+                            valor : this.cadencias[idx].valor_esperado
+                    };
                     emit(key, value);
                 };
             }
-        """
-        )
+        """)
         # reduce to a list of tag ids and counts
         reduce_f = Code ("""
         function(data_reuniao, objs) {
-            reducedVal = { propostas: 0, projetos: 0, pipeline : 0};
+            reducedVal = { propostas: 0, projetos: 0, pipeline : 0, sum_propostas : 0};
             var resultArray = [];
             for (var idx = 0; idx < objs.length; idx++) {
                 reducedVal.pipeline += objs[idx].valor;
                 if (resultArray.indexOf(objs[idx].nome) == -1){
                     resultArray.push(objs[idx].nome);
                     reducedVal.projetos += 1;
-                    if(objs[idx].goals.indexOf("Enviada a Proposta") != -1)
-                        reducedVal.propostas += 1;
+                    if(objs[idx].goals.indexOf("Enviada a Proposta") != -1){
+                    	reducedVal.propostas += 1;
                         resultArray.push(objs[idx].nome);
+                        reducedVal.sum_propostas += objs[idx].valor;
+                    }
                 }
             }
             return reducedVal;
@@ -112,25 +116,33 @@ class Projeto(Document):
         f = """
             function (key, reducedVal) {
                 if (typeof reducedVal.propostas == 'undefined'){
-                    if (reducedVal.goals.indexOf("Enviada a Proposta") != -1)
-                        return {
+                    if (reducedVal.goals.indexOf("Enviada a Proposta") != -1){
+                    	return {
                             propostas : 1,
                             projetos : 1,
-                            pipeline : reducedVal.valor
+                            pipeline : reducedVal.valor,
+                            sum_propostas : reducedVal.valor
                         };
-                    else
+                    }
+                    else{
                         return {
                             propostas : 0,
                             projetos : 1,
-                            pipeline : reducedVal.valor
+                            pipeline : reducedVal.valor,
+                            sum_propostas : 0
                         };
+                   }
                 }else{
                     return reducedVal;
                 }
             };
           """
         results = document.objects.map_reduce(map_f,reduce_f,output="inline",finalize_f=f)
-        return dashboard_geral(list(results))
+        try:
+            results = list(results)
+        except:
+            return []
+        return dashboard_geral(results)
     @classmethod
     # Soma de propostas de projeto ativos.
     def pipeline(document):
@@ -221,15 +233,3 @@ class Projeto(Document):
         }
         """
         return document.objects.exec_js(code)
-
-    # @classmethod
-    # def refresh(self):
-    #     proj =  Projeto.objects.get(
-    #         vendedor = self.vendedor,
-    #         cliente = self.cliente,
-    #         nome = self.nome
-    #     )
-    #     return proj
-    #def __unicode__(self):
-    #    return self.vendedor, self.cliente, self.nome
-

@@ -5,6 +5,8 @@ APP_DIR = os.path.dirname( globals()['__file__'] )
 DBNAME = 'lb2Cadencia'
 
 DEBUG = True
+## Add this if want to Debug=False
+#ALLOWED_HOSTS = ['localhost']
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

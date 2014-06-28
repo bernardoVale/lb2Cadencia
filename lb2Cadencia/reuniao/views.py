@@ -16,16 +16,23 @@ def home(request):
     vendedor = "Bernardo Vale"
     locale.setlocale( locale.LC_ALL, 'pt_BR' )
     #Quantidade de Propostas ativas
-    qpa =  len(Projeto.objects(ativo=True))
-    # Valor das propostas ativa
-    vpa = locale.currency(Projeto.sum_projetos_ativos())
-    pipe = locale.currency(Projeto.pipeline())
-    qt_propostas = str(Projeto.qt_propostas())[0:-2] #corta ,0
     graph = Projeto.mr_qt_propostas()
-    return render_to_response('home.html',{'qpa':qpa,'vpa':vpa
-                            ,'pipe':pipe,'datas' : graph[0], 'propostas': graph[1]
-                            ,'projetos' : graph[2] ,'pipeline' : graph[3]
-                                               ,'qt_propostas':qt_propostas},
+    if graph:
+        qt_propostas = str(graph[1][-1])[0:-2]
+        qpa = str(graph[2][-1])
+        pipe = str(locale.currency(graph[3][-1]))
+        vpa = str(locale.currency(graph[4][-1]))
+        #qpa =  len(Projeto.objects(ativo=True))
+        # Valor das propostas ativa
+        #vpa = locale.currency(Projeto.sum_projetos_ativos())
+        #pipe = locale.currency(Projeto.pipeline())
+        #qt_propostas = str(Projeto.qt_propostas())[0:-2] #corta ,0
+        return render_to_response('home.html',{'existeProjetos': True, 'qpa':qpa,'vpa':vpa
+                                ,'pipe':pipe,'datas' : graph[0], 'propostas': graph[1]
+                                ,'projetos' : graph[2] ,'pipeline' : graph[3]
+                                ,'sum_propostas' : graph[4], 'qt_propostas':qt_propostas},
+                                  context_instance=RequestContext(request))
+    return render_to_response('home.html',{'existeProjetos' : False},
                               context_instance=RequestContext(request))
 def base(request):
     return render_to_response('base.html',

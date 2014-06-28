@@ -5,7 +5,9 @@
 {% block content %}
     <div class="lb2_jumbotron jumbotron" onload="mas">
         <h1>LB2 Cadência</h1>
+        {% if existeProjetos %}
         <div id="container" style="min-width: 250px; height: 300px; margin: 0 auto"></div>
+        {% endif %}
         <p content="asdasd"><h4 id="qpa" onload="maskMe(this.id,{{qpa}})">Quantidade de Projetos : {{ qpa|default:"Sem propostas ativas" }}</h4></p>
         <p><h4>Projetos com Proposta : {{ qt_propostas|default:"Não existe nenhum projeto" }}</h4></p>
         <p><h4 id="vpa">Valor Total em Propostas : {{ vpa|default:"Sem propostas ativas" }}</h4></p>
@@ -19,50 +21,58 @@
     <script src="{% static "bootstrap/js/highcharts.js" %}"></script>
     <script src="{% static "bootstrap/js/exporting.js" %}"></script>
     <script type="text/javascript">
-        var datas = {{ datas|safe }};
-        var propostas = {{ propostas|safe }};
-        var projetos = {{ projetos|safe }};
-        var pipeline = {{ pipeline| safe }}
-        $(function () {
-            $('#container').highcharts({
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'LB2 Cadencia'
-            },
-            xAxis: {
-            categories: datas
-            },
-            yAxis: {
-            title: {
-                text: 'Valor'
-            }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
+        {% if existeProjetos %}
+            var datas = {{ datas|safe }};
+            var propostas = {{ propostas|safe }};
+            var projetos = {{ projetos|safe }};
+            var pipeline = {{ pipeline|safe }};
+            var sum_propostas = {{ sum_propostas|safe }};
+            $(function () {
+                $('#container').highcharts({
+                chart: {
+                    type: 'line',
+                    zoomType: 'y'
                 },
-                enableMouseTracking: true
-            }
-            },
-            series: [
-                {
-                    name: 'Quant. Propostas',
-                    data: propostas
+                title: {
+                    text: 'Linha do Tempo - LB2 Cadência'
                 },
-                {
-                    name: 'Quant. Projetos',
-                    data: projetos
+                xAxis: {
+                categories: datas
                 },
-                {
-                    name: 'Pipeline',
-                    data: pipeline
+                yAxis: {
+                title: {
+                    text: 'Valor'
                 }
-            ]
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+                },
+                series: [
+                    {
+                        name: 'Quant. Propostas',
+                        data: propostas
+                    },
+                    {
+                        name: 'Quant. Projetos',
+                        data: projetos
+                    },
+                    {
+                        name: 'Pipeline',
+                        data: pipeline
+                    },
+                    {
+                        name: 'Total em Propostas',
+                        data: sum_propostas
+                    }
+                ]
+                });
             });
-        });
+        {% endif %}
         function maskMe(id,valor){
             var val = $(id).maskMoney('mask', valor);
         }
