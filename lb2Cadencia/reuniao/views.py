@@ -13,7 +13,6 @@ import datetime
 
 
 def home(request):
-    vendedor = "Bernardo Vale"
     locale.setlocale( locale.LC_ALL, 'pt_BR' )
     #Quantidade de Propostas ativas
     graph = Projeto.mr_qt_propostas()

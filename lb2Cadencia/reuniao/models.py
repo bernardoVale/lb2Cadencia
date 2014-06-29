@@ -10,7 +10,7 @@ connect(DBNAME)
 
 class Cadencia(EmbeddedDocument):
     acao = StringField(max_length=100, required=True, verbose_name='Ação')
-    data_reuniao = DateTimeField(required=True, verbose_name='Data da Reunião' , default=datetime.now())
+    data_reuniao = DateTimeField(unique=True, required=True, verbose_name='Data da Reunião' , default=datetime.now())
     valor_esperado = FloatField(required=True, min_value=0.0, verbose_name='Valor Esperado')
     contato = StringField(max_length=40 ,required=True, verbose_name='Contato Atual')
     goals = ListField(StringField(max_length=50), verbose_name='Goals')
@@ -70,9 +70,11 @@ def dashboard_geral(list):
     return [data, propostas, projetos, pipeline, sum_propostas]
 
 class Projeto(Document):
-    vendedor = StringField(max_length=30 , required=True , verbose_name='Vendedor')
-    cliente = StringField(max_length=40 , required=True , verbose_name='Cliente')
-    nome = StringField(max_length=80 , required=True , verbose_name='Nome')
+    vendedor = StringField(max_length=30 , unique_with= ('vendedor','cliente','nome')
+                           , required=True , verbose_name='Vendedor')
+    cliente = StringField(max_length=40 , required=True
+                          , verbose_name='Cliente')
+    nome = StringField(max_length=80 , required=True, verbose_name='Nome')
     cadencias = ListField(EmbeddedDocumentField(Cadencia))
     ativo = BooleanField(default=True)
     meta = {'queryset_class': ProjetoQuerySet}
@@ -138,11 +140,11 @@ class Projeto(Document):
             };
           """
         results = document.objects.map_reduce(map_f,reduce_f,output="inline",finalize_f=f)
-        try:
-            results = list(results)
-        except:
+        results = list(results)
+        if results:
+            return dashboard_geral(results)
+        else:
             return []
-        return dashboard_geral(results)
     @classmethod
     # Soma de propostas de projeto ativos.
     def pipeline(document):
